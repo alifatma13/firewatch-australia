@@ -46,7 +46,7 @@ lint/generated/
 # Signing configs
 release.properties
 
-# Firebase / Google services (if needed)
+# Firebase / Google services
 google-services.json
 
 # Play store credentials
