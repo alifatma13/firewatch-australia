@@ -1,15 +1,57 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# Gradle
+.gradle/
+build/
+
+# Local configuration file
 local.properties
+
+# Android Studio
+.idea/
+*.iml
+
+# Keystore files
+*.jks
+*.keystore
+*.keystore.jks
+
+# Build outputs
+app/build/
+*/build/
+
+# Generated files
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Kotlin
+.kotlin/
+
+# Gradle wrapper logs
+gradle-app.setting
+
+# Android Studio navigation editor temp files
+.navigation/
+
+# Lint
+lint/intermediates/
+lint/generated/
+
+# Signing configs
+release.properties
+
+# Firebase / Google services (if needed)
+google-services.json
+
+# Play store credentials
+service_account.json
+
+# Temporary files
+*.tmp
+*.temp

@@ -1,4 +1,4 @@
-package com.example.firewatch
+package com.alifatma.firewatch
 
 import org.junit.Test
 

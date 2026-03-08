@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.firewatch"
+    namespace = "com.alifatma.firewatch"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.firewatch"
+        applicationId = "com.alifatma.firewatch"
         minSdk = 26
         targetSdk = 36
         versionCode = 1
