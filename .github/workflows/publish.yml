@@ -91,6 +91,11 @@ jobs:
       - name: Set up gcloud
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Set up Google Cloud auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_AUTH }}
+
       - name: Run instrumentation tests in Firebase Test Lab
         run: |
           gcloud firebase test android run \
