@@ -97,5 +97,4 @@ jobs:
             --type instrumentation \
             --app app-debug.apk \
             --test app-debug-androidTest.apk \
-            --device model=shiba,version=34 \
-            --results-bucket=firewatch-testlab-results
+            --device model=shiba,version=34
