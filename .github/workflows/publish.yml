@@ -20,8 +20,25 @@ jobs:
           java-version: 17
           cache: 'gradle'
 
-      - name: Allow gradlew execution
+      - name: Grand execute permissions to gradlew
         run: chmod +x gradlew
+
+      - name: Run unit tests
+        run: ./gradlew testDebug
+
+  apk:
+    name: Generate APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: 'gradle'
 
       - name: Assemble app debug APK
         run: ./gradlew assembleDebug
