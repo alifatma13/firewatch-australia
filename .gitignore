@@ -17,6 +17,7 @@ local.properties
 # Build outputs
 app/build/
 */build/
+app/release/
 
 # Generated files
 captures/
