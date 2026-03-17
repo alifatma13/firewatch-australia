@@ -15,8 +15,13 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField(
+            "String",
+            "RFS_NSW_GOV_AU",
+            "\"https://www.rfs.nsw.gov.au/\""
+        )
     }
 
     buildTypes {
@@ -27,10 +32,17 @@ android {
                 "proguard-rules.pro"
             )
         }
+        debug{
+            isMinifyEnabled = false
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    buildFeatures{
+        buildConfig = true
     }
 }
 

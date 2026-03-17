@@ -6,4 +6,6 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonIgnoreUnknownKeys
 
 @Serializable
-data class RfsFeature(val type: String, val geometry : JsonElement?=null, val properties : RfsProperties)
+data class RfsFeature(val type: String,
+                      val geometry : Geometry?=null,
+                      val properties : RfsProperties)
