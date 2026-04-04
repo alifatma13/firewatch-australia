@@ -6,18 +6,25 @@ import androidx.lifecycle.viewModelScope
 import com.alifatma.firewatch.data.RfsProperties
 import com.alifatma.firewatch.data.extractCenter
 import com.alifatma.firewatch.data.extractPolygons
-import com.alifatma.firewatch.network.RetrofitClient
+import com.alifatma.firewatch.network.RfsApiService
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class MainViewModel : ViewModel() {
+@HiltViewModel
+class MainViewModel
+@Inject constructor(
+    private val rfsApiService: RfsApiService
+) : ViewModel() {
 
     private val TAG = "MainViewModel"
 
-    val incidents = MutableStateFlow<List<RfsProperties>>(emptyList())
+    val _incidents = MutableStateFlow<List<RfsProperties>>(emptyList())
+    val incidents: StateFlow<List<RfsProperties>> = _incidents
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
@@ -27,8 +34,8 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
 
             try {
-                val result = RetrofitClient.api.getMajorIncidents()
-                incidents.update { result.features.map { it.properties } }
+                val result = rfsApiService.getMajorIncidents()
+                _incidents.update { result.features.map { it.properties } }
                 result.features.forEach {
                     val center = it.geometry?.extractCenter()
                     val polygons = it.geometry?.extractPolygons()
@@ -41,4 +48,5 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
 }

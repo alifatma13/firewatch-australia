@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("org.jetbrains.kotlin.plugin.serialization")
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -62,4 +65,7 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.ktx)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
 }
