@@ -1,15 +1,17 @@
 package com.alifatma.firewatch
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.alifatma.firewatch.network.RetrofitClient
-import com.alifatma.firewatch.network.RfsApiService
-import kotlinx.coroutines.runBlocking
-import org.junit.Before
+import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import retrofit2.Retrofit
 
 @RunWith(AndroidJUnit4::class)
 class RfsInstrumentedTest {
 
+    @Test
+    fun useAppContext() {
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("com.alifatma.firewatch", appContext.packageName)
+    }
 }
