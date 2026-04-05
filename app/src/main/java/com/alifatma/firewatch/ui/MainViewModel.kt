@@ -7,6 +7,7 @@ import com.alifatma.firewatch.data.RfsProperties
 import com.alifatma.firewatch.data.extractCenter
 import com.alifatma.firewatch.data.extractPolygons
 import com.alifatma.firewatch.network.RfsApiService
+import com.alifatma.firewatch.repository.IncidentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class MainViewModel
 @Inject constructor(
-    private val rfsApiService: RfsApiService
+    private val incidentRepository: IncidentRepository
 ) : ViewModel() {
 
     private val TAG = "MainViewModel"
@@ -34,18 +35,24 @@ class MainViewModel
         viewModelScope.launch {
 
             try {
-                val result = rfsApiService.getMajorIncidents()
-                _incidents.update { result.features.map { it.properties } }
-                result.features.forEach {
-                    val center = it.geometry?.extractCenter()
-                    val polygons = it.geometry?.extractPolygons()
-                    Log.d(TAG, "[${it.properties.category}] ${it.properties.title}")
-                    Log.d(TAG, "  center=$center polygons=${polygons?.size}")
+                val result = incidentRepository.getMajorIncidents()
+                result.onSuccess { featureCollection ->
+                    _incidents.update { featureCollection.features.map { it.properties } }
+                    featureCollection.features.forEach {
+                        val center = it.geometry?.extractCenter()
+                        val polygons = it.geometry?.extractPolygons()
+                        Log.d(TAG, "[${it.properties.category}] ${it.properties.title}")
+                        Log.d(TAG, "  center=$center polygons=${polygons?.size}")
+            }
+                }.onFailure { e ->
+                    Log.e(TAG, "failed to fetch: ${e.message}")
+                    _error.update { e.message }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "failed to fetch: ${e.message}")
+                Log.e(TAG, "unexpected error: ${e.message}")
                 _error.update { e.message }
             }
+
         }
     }
 
