@@ -31,16 +31,20 @@ sealed class Geometry {
 
 }
 
-private fun List<Double>.toLatLng() = Coordinates(lat = this[1], lng = this[0])
+private fun List<Double>.toPoint() = Coordinates(lat = this[1], lng = this[0])
 
 fun Geometry.extractCenter(): Coordinates? = when (this) {
-    is Point -> coordinates.toLatLng()
-    is Polygon -> listOf(coordinates[0].map { it.toLatLng() })
+    is Point -> coordinates.toPoint()
+
+    is GeometryCollection ->
+        geometries
+            .firstNotNullOfOrNull { it.extractCenter() }
+
     else -> null
-} as Coordinates?
+}
 
 fun Geometry.extractPolygons(): List<List<Coordinates>> = when (this) {
-    is Polygon -> listOf(coordinates[0].map { it.toLatLng() })
+    is Polygon -> listOf(coordinates[0].map { it.toPoint() })
     is GeometryCollection -> geometries.flatMap { it.extractPolygons() }
     else -> emptyList()
 }
