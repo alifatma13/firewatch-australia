@@ -18,7 +18,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.alifatma.firewatch.HiltTestRunner"
 
         buildConfigField(
             "String",
@@ -44,6 +44,16 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
+    packaging {
+        resources {
+            excludes += "/META-INF/{LICENSE.md,LICENSE-notice.md}"
+        }
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
+
     buildFeatures{
         buildConfig = true
     }
@@ -55,9 +65,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
     implementation(libs.kotlinx.serialization.json)
@@ -68,4 +75,19 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+
+    // test
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.mockwebserver)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.mockk.android)
+    kspAndroidTest(libs.hilt.android.compiler)
+    testImplementation(kotlin("test"))
+
+
 }
