@@ -31,6 +31,7 @@ sealed class Geometry {
 
 }
 
+// GeoJSON coordinates are [longitude, latitude], while Coordinates stores (lat, lng).
 private fun List<Double>.toPoint() = Coordinates(lat = this[1], lng = this[0])
 
 fun Geometry.extractCenter(): Coordinates? = when (this) {

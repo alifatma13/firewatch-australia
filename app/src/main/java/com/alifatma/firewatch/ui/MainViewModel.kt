@@ -27,12 +27,17 @@ class MainViewModel
     private val _uiState = MutableStateFlow<RfsUiState>(RfsUiState.Loading)
     val uiState: StateFlow<RfsUiState> = _uiState
 
+    init {
+        load()
+    }
+
     fun load() {
 
         viewModelScope.launch {
             when (val result = incidentRepository.getMajorIncidents()) {
                 is Success -> {
                     val incidents = result.data.features
+                    _uiState.value = RfsUiState.Success(incidents)
                     incidents.forEach { incident ->
                         val geometry = incident.geometry
                         val center = geometry?.extractCenter()
@@ -47,13 +52,12 @@ class MainViewModel
                             }
 
                         }
-                        _uiState.value = RfsUiState.Success(incidents)
                     }
                 }
 
                 is Error -> {
-                    Log.e(TAG, "Error fetching incidents: ${result.message}", result.exception)
                     _uiState.value = RfsUiState.Error(result.message)
+                    Log.e(TAG, "Error fetching incidents: ${result.message}", result.exception)
                 }
 
                 Loading -> {
