@@ -21,11 +21,11 @@ class IncidentRepositoryImpl
         } catch (e: CancellationException) {
             throw e         // Preserve structured concurrency of coroutine
         } catch (e: IOException) {
-            return Result.Error("Network error: ${e.message}", e)
+            return Result.Error("${e.message}", e)
         } catch (e: HttpException) {
-            return Result.Error("HTTP error: ${e.message}", e)
+            return Result.Error("${e.message}", e)
         } catch (e: Exception) {
-            return Result.Error("Unexpected error: ${e.message}", e)
+            return Result.Error("${e.message}", e)
         }
     }
 

@@ -1,7 +1,8 @@
 package com.alifatma.firewatch.network
 
+import com.alifatma.firewatch.data.Geometry
 import com.alifatma.firewatch.data.Result
-import com.alifatma.firewatch.data.RfsFeatureCollection
+import com.alifatma.firewatch.data.extractPolygons
 import com.alifatma.firewatch.repository.IncidentRepository
 import com.alifatma.firewatch.repository.IncidentRepositoryImpl
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -33,6 +34,16 @@ class RfsApiServiceTest {
         return stream.bufferedReader().use { it.readText() }
     }
 
+    private fun enqueueSuccessResponse() {
+        val jsonBody = readResource("network/major-incidents-success.json")
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .addHeader("Content-Type", "application/json")
+                .setBody(jsonBody)
+        )
+    }
+
     @Before
     fun setUp() {
         server = MockWebServer()
@@ -58,13 +69,7 @@ class RfsApiServiceTest {
 
     @Test
     fun `getMajorIncidents parses success response`() = runTest {
-        val jsonBody = readResource("network/major-incidents-success.json")
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .addHeader("Content-Type", "application/json")
-                .setBody(jsonBody)
-        )
+        enqueueSuccessResponse()
 
         val response = api.getMajorIncidents()
 
@@ -75,22 +80,43 @@ class RfsApiServiceTest {
     }
 
     @Test
-    fun `example Test` () =runTest {
-        val jsonBody = readResource("network/major-incidents-success.json")
-        server.enqueue(
-            MockResponse()
-                .setResponseCode(200)
-                .addHeader("Content-Type", "application/json")
-                .setBody(jsonBody)
-        )
-        //Communication / integration
-        val repository : IncidentRepository = IncidentRepositoryImpl(api)
+    fun `check the first feature from the result`() = runTest {
+        enqueueSuccessResponse()
+        // integrated test with real repository and mocked API
+        val repository: IncidentRepository = IncidentRepositoryImpl(api)
 
         val result = repository.getMajorIncidents()
         assertTrue(result is Result.Success)
-        result.data.features.first()
+        assertEquals("(GWYDIR HWY), MATHESON", result.data.features.first().properties.title)
+    }
 
+    @Test
+    fun `getMajorIncidents second feature has point`() = runTest {
+        enqueueSuccessResponse()
+        val repository: IncidentRepository = IncidentRepositoryImpl(api)
+        val result = repository.getMajorIncidents()
+        assertTrue(result is Result.Success)
+        val secondFeature = result.data.features[1]
+        assertTrue(secondFeature.geometry is Geometry.GeometryCollection)
+        val point = secondFeature.geometry.geometries.firstOrNull { it is Geometry.Point }
+        val polygons = secondFeature.geometry.geometries.find { it.extractPolygons().isNotEmpty() }
+            ?.extractPolygons()
+        println(polygons.toString())
+        assertTrue(point != null)
+    }
 
+    @Test
+    fun `getMajorIncidents second feature has polygons`() = runTest {
+        enqueueSuccessResponse()
+        val repository: IncidentRepository = IncidentRepositoryImpl(api)
+        val result = repository.getMajorIncidents()
+        assertTrue(result is Result.Success)
+        val secondFeature = result.data.features[1]
+        assertTrue(secondFeature.geometry is Geometry.GeometryCollection)
+        val polygons = secondFeature.geometry.geometries.find { it.extractPolygons().isNotEmpty() }
+            ?.extractPolygons()
+        println(polygons.toString())
+        assertTrue(polygons != null && polygons.isNotEmpty())
     }
 
     @Test
