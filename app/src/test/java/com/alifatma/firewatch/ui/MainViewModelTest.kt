@@ -47,6 +47,8 @@ class MainViewModelTest {
         val viewModel = MainViewModel(repository)
         advanceUntilIdle()
 
+        // do not have to verify whether get major incidents is getting called or not
+            // testing behaviour not code structure
         coVerify(exactly = 1) { repository.getMajorIncidents() }
         assertEquals(RfsUiState.Error("network error"), viewModel.uiState.value)
     }
@@ -85,6 +87,10 @@ class MainViewModelTest {
 
     @Test
     fun `init load updates uiState to success when incident geometry has polygon only`() = runTest {
+
+        // create real instance of the repository and pass the mocked api
+        // integrated test
+        // sociable test
         val repository = mockk<IncidentRepository>()
         coEvery { repository.getMajorIncidents() } returns Result.Success(
             RfsFeatureCollection(type = "FeatureCollection", features = multiplePolygonOnlyList)
