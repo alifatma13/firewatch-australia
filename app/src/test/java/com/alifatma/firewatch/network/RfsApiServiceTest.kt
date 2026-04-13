@@ -1,5 +1,9 @@
 package com.alifatma.firewatch.network
 
+import com.alifatma.firewatch.data.Result
+import com.alifatma.firewatch.data.RfsFeatureCollection
+import com.alifatma.firewatch.repository.IncidentRepository
+import com.alifatma.firewatch.repository.IncidentRepositoryImpl
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -14,6 +18,7 @@ import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
 import retrofit2.Retrofit
+import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class RfsApiServiceTest {
@@ -67,6 +72,25 @@ class RfsApiServiceTest {
         assertEquals(8, response.features.size)
         assertEquals("(GWYDIR HWY), MATHESON", response.features.first().properties.title)
         assertEquals("/feeds/majorIncidents.json", server.takeRequest().path)
+    }
+
+    @Test
+    fun `example Test` () =runTest {
+        val jsonBody = readResource("network/major-incidents-success.json")
+        server.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .addHeader("Content-Type", "application/json")
+                .setBody(jsonBody)
+        )
+        //Communication / integration
+        val repository : IncidentRepository = IncidentRepositoryImpl(api)
+
+        val result = repository.getMajorIncidents()
+        assertTrue(result is Result.Success)
+        result.data.features.first()
+
+
     }
 
     @Test
