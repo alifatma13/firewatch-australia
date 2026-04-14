@@ -7,6 +7,7 @@ import com.alifatma.firewatch.repository.IncidentRepository
 import com.alifatma.firewatch.repository.IncidentRepositoryImpl
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,6 +15,7 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
@@ -128,12 +130,10 @@ class RfsApiServiceTest {
                 .setBody("<html><body><h1>404 Not Found</h1></body></html>")
         )
 
-        var exception: HttpException? = null
-        try {
-            api.getMajorIncidents()
-            fail("Expected HttpException for 404 response")
-        } catch (e: HttpException) {
-            exception = e
+        val exception = assertThrows(HttpException::class.java) {
+           runBlocking {
+                api.getMajorIncidents()
+            }
         }
 
         assertEquals(404, exception?.code())

@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
@@ -37,7 +38,7 @@ class MainViewModel
             when (val result = incidentRepository.getMajorIncidents()) {
                 is Success -> {
                     val incidents = result.data.features
-                    _uiState.value = RfsUiState.Success(incidents)
+                    _uiState.update{RfsUiState.Success(incidents)}
                     incidents.forEach { incident ->
                         val geometry = incident.geometry
                         val center = geometry?.extractCenter()
@@ -56,12 +57,12 @@ class MainViewModel
                 }
 
                 is Error -> {
-                    _uiState.value = RfsUiState.Error(result.message)
+                    _uiState.update { RfsUiState.Error(result.message)}
                     Log.e(TAG, "Error fetching incidents: ${result.message}", result.exception)
                 }
 
                 Loading -> {
-                    _uiState.value = RfsUiState.Loading
+                    _uiState.update {RfsUiState.Loading}
                 }
             }
         }
