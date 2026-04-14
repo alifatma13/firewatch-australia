@@ -18,8 +18,6 @@ class IncidentRepositoryImpl
         try {
             val response = rfsApiService.getMajorIncidents()
             return Result.Success(response)
-        } catch (e: CancellationException) {
-            throw e         // Preserve structured concurrency of coroutine
         } catch (e: IOException) {
             return Result.Error("${e.message}", e)
         } catch (e: HttpException) {
