@@ -56,3 +56,6 @@ service_account.json
 # Temporary files
 *.tmp
 *.temp
+
+# Project planning docs
+COMPOSE_UI_ROADMAP.md
