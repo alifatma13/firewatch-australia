@@ -18,12 +18,15 @@ class IncidentRepositoryImpl
         try {
             val response = rfsApiService.getMajorIncidents()
             return Result.Success(response)
+        } catch (e: CancellationException) {
+            // Do not convert cancellation into a business error.
+            throw e
         } catch (e: IOException) {
-            return Result.Error("${e.message}", e)
+            return Result.Error("Network error: ${e.message}", e)
         } catch (e: HttpException) {
-            return Result.Error("${e.message}", e)
+            return Result.Error("HTTP error: ${e.message}", e)
         } catch (e: Exception) {
-            return Result.Error("${e.message}", e)
+            return Result.Error("Unexpected error: ${e.message}", e)
         }
     }
 

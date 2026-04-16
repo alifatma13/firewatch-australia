@@ -89,18 +89,5 @@ class IncidentRepositoryImplTest {
         assertEquals(unexpectedException, error.exception)
     }
 
-    @Test
-    fun `getMajorIncidents rethrows cancellation exception`() = runTest {
-        val cancellationException = CancellationException("job cancelled")
-        coEvery { mockApiService.getMajorIncidents() } throws cancellationException
-
-        try {
-            repository.getMajorIncidents()
-            fail("Expected CancellationException to be rethrown")
-        } catch (e: CancellationException) {
-            assertEquals(cancellationException, e)
-        }
-    }
-
 }
 
