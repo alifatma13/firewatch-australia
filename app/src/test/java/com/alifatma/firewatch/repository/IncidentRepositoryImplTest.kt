@@ -1,19 +1,18 @@
 package com.alifatma.firewatch.repository
 
 import com.alifatma.firewatch.data.Result
+import com.alifatma.firewatch.data.Result.ErrorType
 import com.alifatma.firewatch.data.RfsFeatureCollection
 import com.alifatma.firewatch.data.RfsFeaturesStub.singlePointIncident
 import com.alifatma.firewatch.network.RfsApiService
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.ResponseBody.Companion.toResponseBody
 import okio.IOException
 import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import retrofit2.HttpException
@@ -45,8 +44,7 @@ class IncidentRepositoryImplTest {
 
         assertTrue(result is Result.Error)
         val error = result as Result.Error
-        assertTrue(error.message.contains("Network error"))
-        assertTrue(error.message.contains("Socket timeout"))
+        assertEquals(ErrorType.NETWORK, error.errorType)
         assertEquals(ioException, error.exception)
     }
 
@@ -59,7 +57,7 @@ class IncidentRepositoryImplTest {
 
         assertTrue(result is Result.Error)
         val error = result as Result.Error
-        assertTrue(error.message.contains("HTTP error"))
+        assertEquals(ErrorType.HTTP, error.errorType)
         assertEquals(httpException, error.exception)
     }
 
@@ -72,7 +70,7 @@ class IncidentRepositoryImplTest {
 
         assertTrue(result is Result.Error)
         val error = result as Result.Error
-        assertTrue(error.message.contains("HTTP error"))
+        assertEquals(ErrorType.HTTP, error.errorType)
         assertEquals(notFoundException, error.exception)
     }
 
@@ -85,9 +83,8 @@ class IncidentRepositoryImplTest {
 
         assertTrue(result is Result.Error)
         val error = result as Result.Error
-        assertTrue(error.message.contains("Unexpected error"))
+        assertEquals(ErrorType.UNKNOWN, error.errorType)
         assertEquals(unexpectedException, error.exception)
     }
 
 }
-

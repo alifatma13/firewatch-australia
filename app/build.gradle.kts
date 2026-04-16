@@ -18,7 +18,7 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "com.alifatma.firewatch.HiltTestRunner"
+        testInstrumentationRunner = "com.alifatma.firewatch.di.HiltTestRunner"
 
         buildConfigField(
             "String",

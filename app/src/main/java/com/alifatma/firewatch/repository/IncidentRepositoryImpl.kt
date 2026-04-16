@@ -1,11 +1,10 @@
 package com.alifatma.firewatch.repository
 
 import com.alifatma.firewatch.data.Result
+import com.alifatma.firewatch.data.Result.ErrorType
 import com.alifatma.firewatch.data.RfsFeatureCollection
 import com.alifatma.firewatch.network.RfsApiService
 import jakarta.inject.Inject
-import kotlinx.coroutines.CancellationException
-
 import okio.IOException
 import retrofit2.HttpException
 
@@ -19,11 +18,11 @@ class IncidentRepositoryImpl
             val response = rfsApiService.getMajorIncidents()
             return Result.Success(response)
         } catch (e: IOException) {
-            return Result.Error("${e.message}", e)
+            return Result.Error(message = e.message.orEmpty(), exception = e, errorType = ErrorType.NETWORK)
         } catch (e: HttpException) {
-            return Result.Error("${e.message}", e)
+            return Result.Error(message = e.message.orEmpty(), exception = e, errorType = ErrorType.HTTP)
         } catch (e: Exception) {
-            return Result.Error("${e.message}", e)
+            return Result.Error(message = e.message.orEmpty(), exception = e, errorType = ErrorType.UNKNOWN)
         }
     }
 
