@@ -201,4 +201,50 @@ internal object RfsFeaturesStub {
             )
         )
     )
+
+    val listWithoutPropertyDescription = listOf(
+
+        RfsFeature(
+            type = "Feature",
+
+            geometry = Geometry.Point(
+                coordinates = listOf(
+                    152.038422,
+                    -31.531539
+                )
+            ),
+
+            properties = RfsProperties(
+                title = "CELLS RD, CELLS RIVER",
+                category = "Advice",
+                guid = "https://incidents.rfs.nsw.gov.au/api/v1/incidents/653602",
+                pubDate = "9/04/2026 7:01:00 AM",
+                description = ""
+            )
+        )
+
+    )
+
+    val pointIncidentStubForParsingProperties = listOf(
+
+        RfsFeature(
+            type = "Feature",
+
+            geometry = Geometry.Point(
+                coordinates = listOf(
+                    151.77973938,
+                    -32.321048737
+                )
+            ),
+
+            properties = RfsProperties(
+                title = "MAIN CREEK RD, MAIN CREEK",
+                category = "Advice",
+                guid = "https://incidents.rfs.nsw.gov.au/api/v1/incidents/654798",
+                pubDate = "16/04/2026 1:54:00 PM",
+                description = "ALERT LEVEL: Advice <br />LOCATION: MAIN CREEK RD, MAIN CREEK 2420 <br />COUNCIL AREA: Dungog <br />STATUS: Being controlled <br />TYPE: Bush Fire <br />FIRE: Yes <br />SIZE: 0 ha <br />RESPONSIBLE AGENCY: Rural Fire Service <br />UPDATED: 16 Apr 2026 23:54"
+            )
+        )
+
+    )
 }
