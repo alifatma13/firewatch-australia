@@ -1,12 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
 
 }
 
-android {
+android{
     namespace = "com.alifatma.firewatch"
     compileSdk {
         version = release(36)
@@ -59,6 +60,7 @@ android {
 
     buildFeatures{
         buildConfig = true
+        compose = true
     }
 }
 
@@ -67,15 +69,15 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
 
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.activity.ktx)
 
+    // hilt and annotation processing
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
 
@@ -91,6 +93,26 @@ dependencies {
     androidTestImplementation(libs.mockk.android)
     kspAndroidTest(libs.hilt.android.compiler)
     testImplementation(kotlin("test"))
+    androidTestImplementation(libs.androidx.ui.test.junit4.android)
+
+    //debug
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+
+    // compose
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.play.services.maps)
+    implementation(libs.maps.compose)
+
 
 
 }
