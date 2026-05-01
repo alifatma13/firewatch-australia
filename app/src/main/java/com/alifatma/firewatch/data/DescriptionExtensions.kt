@@ -106,3 +106,8 @@ private fun decodeHtmlEntities(text: String): String {
     return result
 }
 
+fun RfsProperties.extractIncidentId() : String? {
+    val regex = "(\\d+)$".toRegex()
+    return regex.find(this.guid)?.value
+}
+

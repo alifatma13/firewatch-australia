@@ -40,3 +40,18 @@ val OutlineVariant = Color(0xFFE3BFB2)              // ghost border at 15% opaci
 val Error   = Color(0xFFBA1A1A)
 val OnError = Color(0xFFFFFFFF)
 
+
+//--Incident Severity Colors---
+val UnderControl = Color(0xFF388E3C)
+val BeingControlled = Color(0xFFB34700)
+val NotYetControlled = Color(0xFFE84918)
+val Responded = Color(0xFF1976D2)
+
+//--Alert Level Colors---
+
+val EmergencyWarning = Color(0xFFD84315)
+val WatchAndAct = Color(0xFFFFA000)
+val AlertAdvice = Color(0xFF2F6F73)
+val PlannedBurn = Color(0xFF388E3C)
+
+

@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.alifatma.firewatch.data.Result.Error
 import com.alifatma.firewatch.data.Result.Loading
 import com.alifatma.firewatch.data.Result.Success
-import com.alifatma.firewatch.data.extractCenter
-import com.alifatma.firewatch.data.extractPolygons
 import com.alifatma.firewatch.repository.IncidentRepository
+import com.alifatma.firewatch.ui.model.FireIncidentUiModel
+import com.alifatma.firewatch.ui.model.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +27,10 @@ class MainViewModel
 
     private val _uiState = MutableStateFlow<RfsUiState>(RfsUiState.Loading)
     val uiState: StateFlow<RfsUiState> = _uiState
+    var incidents: List<FireIncidentUiModel> = emptyList()
+
+
+
 
     init {
         load()
@@ -37,32 +41,20 @@ class MainViewModel
         viewModelScope.launch {
             when (val result = incidentRepository.getMajorIncidents()) {
                 is Success -> {
-                    val incidents = result.data.features
-                    _uiState.update{RfsUiState.Success(incidents)}
-                    incidents.forEach { incident ->
-                        val geometry = incident.geometry
-                        val center = geometry?.extractCenter()
-                        val polygons = geometry?.extractPolygons()
-                        Log.d(
-                            TAG,
-                            "Incident: ${incident.properties.guid.substringAfterLast("/")}, Center: $center Polygons: ${polygons?.size ?: 0}"
-                        )
-                        polygons.let { polygon ->
-                            polygon?.forEach {
-                                Log.d(TAG, "Polygon with ${it.size} points")
-                            }
-
-                        }
+                    incidents = result.data.features.map {
+                        it.toUiModel()
                     }
+                    Log.i(TAG, "Successfully fetched ${incidents.size} incidents")
+                    _uiState.update { RfsUiState.Success(incidents) }
                 }
 
                 is Error -> {
-                    _uiState.update { RfsUiState.Error(result.message)}
+                    _uiState.update { RfsUiState.Error(result.message) }
                     Log.e(TAG, "Error fetching incidents: ${result.message}", result.exception)
                 }
 
                 Loading -> {
-                    _uiState.update {RfsUiState.Loading}
+                    _uiState.update { RfsUiState.Loading }
                 }
             }
         }
