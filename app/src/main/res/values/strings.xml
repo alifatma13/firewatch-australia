@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">FireWatch</string>
+    <string name="app_name">Sentinel</string>
+    <string name="incident_location_content_description">Location</string>
+    <string name="incident_status_label">STATUS</string>
+    <string name="incident_category_label">CATEGORY</string>
+    <string name="incident_impact_size_label">IMPACT SIZE</string>
+    <string name="incident_agency_label">AGENCY</string>
+    <string name="incident_published_label">PUBLISHED</string>
+    <string name="incident_type_label">INCIDENT TYPE</string>
+    <string name="incident_view_map">VIEW MAP</string>
+    <string name="incident_share_content_description">Share</string>
+    <string name="incident_bookmark_content_description">Bookmark</string>
+    <string name="incident_council_area_format">Council Area %1$s</string>
+    <string name="incident_unknown_value">-</string>
 </resources>

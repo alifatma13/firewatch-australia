@@ -6,9 +6,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.googlefonts.Font
 import androidx.compose.ui.text.googlefonts.GoogleFont
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.alifatma.firewatch.R
-import androidx.annotation.ArrayRes
 
 private val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -25,7 +25,6 @@ val SpaceGrotesk = FontFamily(
     Font(googleFont = SpaceGroteskFont, fontProvider = provider, weight = FontWeight.Bold),
 )
 
-// Inter — Body & Labels: gold standard readability for telemetry/data/descriptions
 private val InterFont = GoogleFont("Inter")
 val Inter = FontFamily(
     Font(googleFont = InterFont, fontProvider = provider, weight = FontWeight.Normal),
@@ -34,7 +33,7 @@ val Inter = FontFamily(
 )
 
 val FireWatchTypography = Typography(
-    // Display-LG: critical numeric alerts (e.g. Acreage) — 3.5rem
+
     displayLarge = TextStyle(
         fontFamily = SpaceGrotesk,
         fontWeight = FontWeight.Bold,
@@ -55,7 +54,6 @@ val FireWatchTypography = Typography(
         lineHeight = 44.sp,
     ),
 
-    // Headlines: section headers, active fires count
     headlineLarge = TextStyle(
         fontFamily = SpaceGrotesk,
         fontWeight = FontWeight.Bold,
@@ -75,7 +73,6 @@ val FireWatchTypography = Typography(
         lineHeight = 32.sp,
     ),
 
-    // Titles: card titles, incident names
     titleLarge = TextStyle(
         fontFamily = SpaceGrotesk,
         fontWeight = FontWeight.SemiBold,
@@ -97,7 +94,6 @@ val FireWatchTypography = Typography(
         letterSpacing = 0.1.sp,
     ),
 
-    // Body: descriptions, telemetry, coordinates
     bodyLarge = TextStyle(
         fontFamily = Inter,
         fontWeight = FontWeight.Normal,
@@ -120,7 +116,6 @@ val FireWatchTypography = Typography(
         letterSpacing = 0.4.sp,
     ),
 
-    // Label-MD: map coordinates & metadata in all-caps editorial style — 0.75rem
     labelLarge = TextStyle(
         fontFamily = Inter,
         fontWeight = FontWeight.Medium,
@@ -131,9 +126,9 @@ val FireWatchTypography = Typography(
     labelMedium = TextStyle(
         fontFamily = Inter,
         fontWeight = FontWeight.Medium,
-        fontSize = 12.sp,          // 0.75rem
+        fontSize = 12.sp,
         lineHeight = 16.sp,
-        letterSpacing = 1.2.sp,    // wide tracking for editorial all-caps feel
+        letterSpacing = 1.2.sp,
     ),
     labelSmall = TextStyle(
         fontFamily = Inter,
@@ -143,4 +138,70 @@ val FireWatchTypography = Typography(
         letterSpacing = 0.5.sp,
     ),
 )
+/*
 
+val SentinelTypography = Typography(
+    displayLarge = TextStyle(
+        fontFamily = SpaceGrotesk,
+        fontWeight = FontWeight.Black,
+        fontSize = 48.sp,
+        lineHeight = 56.sp,
+        letterSpacing = (-0.02).em
+    ),
+    headlineLarge = TextStyle(
+        fontFamily = SpaceGrotesk,
+        fontWeight = FontWeight.Bold,
+        fontSize = 32.sp,
+        lineHeight = 40.sp,
+        letterSpacing = (-0.01).em
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = SpaceGrotesk,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
+        letterSpacing = (-0.01).em
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = SpaceGrotesk,
+        fontWeight = FontWeight.Medium,
+        fontSize = 20.sp,
+        lineHeight = 28.sp,
+        letterSpacing = 0.em
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.01.em
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.01.em
+    ),
+    bodySmall = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.01.em
+    ),
+    labelLarge = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.1.em
+    ),
+    labelMedium = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.Medium,
+        fontSize = 11.sp,
+        letterSpacing = 0.08.em
+    ),
+)
+*/

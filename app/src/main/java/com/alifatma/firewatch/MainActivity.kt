@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FireWatchTheme {
-                MainScreen(viewModel = viewModel)
+                MainScreen()
             }
 
         }

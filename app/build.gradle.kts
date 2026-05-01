@@ -79,6 +79,7 @@ dependencies {
 
     // hilt and annotation processing
     implementation(libs.hilt.android)
+    implementation(libs.ui)
     ksp(libs.hilt.android.compiler)
 
     // test
@@ -112,6 +113,11 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.play.services.maps)
     implementation(libs.maps.compose)
+    implementation(libs.androidx.material.icons.extended)
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+    implementation("androidx.compose.material:material:1.6.1")
+    implementation(libs.lottie.compose)
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
 
 

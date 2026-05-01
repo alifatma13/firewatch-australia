@@ -11,6 +11,7 @@ import com.alifatma.firewatch.data.extractPolygons
 import com.alifatma.firewatch.network.RfsApiService
 import com.alifatma.firewatch.repository.IncidentRepository
 import com.alifatma.firewatch.repository.IncidentRepositoryImpl
+import com.alifatma.firewatch.ui.model.toUiModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -71,7 +72,7 @@ class MainViewModelTest {
         val viewModel = MainViewModel(repository)
         advanceUntilIdle()
 
-        assertEquals(RfsUiState.Success(singlePointIncident), viewModel.uiState.value)
+        assertEquals(RfsUiState.Success(singlePointIncident.map{ it.toUiModel()}), viewModel.uiState.value)
         assertFalse(viewModel.uiState.value is RfsUiState.Loading)
         assertFalse(viewModel.uiState.value is RfsUiState.Error)
     }
@@ -112,9 +113,9 @@ class MainViewModelTest {
 
         when (val state = viewModel.uiState.value) {
             is RfsUiState.Success -> {
-                val center = state.incidents.firstOrNull()?.geometry?.extractCenter()
+                val center = state.incidents.firstOrNull()?.center
                 assertTrue(center == null)
-                val polygons = state.incidents.firstOrNull()?.geometry?.extractPolygons()
+                val polygons = state.incidents.firstOrNull()?.polygons
                 assertTrue(polygons != null && polygons.isNotEmpty())
             }
 
@@ -140,9 +141,10 @@ class MainViewModelTest {
 
         when (val state = viewModel.uiState.value) {
             is RfsUiState.Success -> {
-                val center = state.incidents.firstOrNull()?.geometry?.extractCenter()
+                //val center = state.incidents.firstOrNull()?.geometry?.extractCenter()
+                val center = state.incidents.firstOrNull()?.center
                 assertTrue(center != null)
-                val polygons = state.incidents.firstOrNull()?.geometry?.extractPolygons()
+                val polygons = state.incidents.firstOrNull()?.polygons
                 assertTrue(polygons != null && polygons.isEmpty())
             }
 
@@ -168,9 +170,9 @@ class MainViewModelTest {
 
             when (val state = viewModel.uiState.value) {
                 is RfsUiState.Success -> {
-                    val center = state.incidents.firstOrNull()?.geometry?.extractCenter()
+                    val center = state.incidents.firstOrNull()?.center
                     assertTrue(center != null)
-                    val polygons = state.incidents.firstOrNull()?.geometry?.extractPolygons()
+                    val polygons = state.incidents.firstOrNull()?.polygons
                     assertTrue(polygons != null && polygons.isNotEmpty())
                 }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Certificate array required by the Compose Google Fonts provider -->
-    <array name="com_google_android_gms_fonts_certs">
+    <string-array name="com_google_android_gms_fonts_certs">
         <item>@array/com_google_android_gms_fonts_certs_dev</item>
         <item>@array/com_google_android_gms_fonts_certs_prod</item>
-    </array>
+    </string-array>
 
     <!-- Development certificate -->
     <string-array name="com_google_android_gms_fonts_certs_dev">
