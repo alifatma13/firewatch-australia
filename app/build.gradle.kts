@@ -118,6 +118,7 @@ dependencies {
     implementation("androidx.compose.material:material:1.6.1")
     implementation(libs.lottie.compose)
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("org.jsoup:jsoup:1.17.2")
 
 
 
