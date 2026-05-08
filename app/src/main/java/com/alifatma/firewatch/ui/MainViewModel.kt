@@ -29,13 +29,8 @@ class MainViewModel
     val uiState: StateFlow<RfsUiState> = _uiState
     var incidents: List<FireIncidentUiModel> = emptyList()
 
-
-
-
-    init {
-        load()
-    }
-
+    // make this public and call from composable
+    // with the launched effect
     fun load() {
 
         viewModelScope.launch {

@@ -1,6 +1,7 @@
 package com.alifatma.firewatch.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -13,6 +14,7 @@ import com.alifatma.firewatch.ui.MainViewModel
 import com.alifatma.firewatch.ui.screens.IncidentListScreen
 import com.alifatma.firewatch.ui.screens.MapScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun FireWatchNavGraph(
@@ -27,7 +29,10 @@ fun FireWatchNavGraph(
     ) {
         composable(Routes.LIST) {
             val viewModel: MainViewModel = hiltViewModel()
-            val uiState by viewModel.uiState.collectAsState()
+            val uiState by viewModel.uiState.collectAsStateWithLifecycle() // is life cycle aware
+            LaunchedEffect(Unit) { // one off load of list items
+                viewModel.load()
+            }
 
             IncidentListScreen(
                 uiState = uiState,
