@@ -24,7 +24,7 @@ val OnTertiaryContainer = Color(0xFF251A00)
 val SurfaceContainerLowest = Color(0xFFFFFFFF)  // highest lift (card on panel)
 val SurfaceContainerLow    = Color(0xFFF3F3F3)  // inactive/background panels
 val Surface                = Color(0xFFF9F9F9)  // base layer
-val SurfaceContainer       = Color(0xFFEEEEEE)  // primary content containers
+val SurfaceContainer       = Color(0xFFFFF8F6)  // primary content containers
 val CardContainer       = Color(0xFFFFF8F6)  // primary content containers
 val SurfaceContainerHigh   = Color(0xFFE8E8E8)  // active/selected zones
 val SurfaceContainerHighest= Color(0xFFE2E2E2)  // input track fill
@@ -41,6 +41,22 @@ val OutlineVariant = Color(0xFFE3BFB2)              // ghost border at 15% opaci
 val Error   = Color(0xFFBA1A1A)
 val OnError = Color(0xFFFFFFFF)
 
+// ── Dark Surface Hierarchy ────────────────────────────────────────────────────
+val DarkSurfaceContainerLowest = Color(0xFF111414)
+val DarkSurfaceContainerLow    = Color(0xFF191C1C)
+val DarkSurface                = Color(0xFF1A1C1C)
+val DarkSurfaceContainer       = Color(0xFF1E2121)
+val DarkCardContainer          = Color(0xFF272120) // warm dark equivalent of CardContainer
+val DarkSurfaceContainerHigh   = Color(0xFF282B2B)
+val DarkSurfaceContainerHighest= Color(0xFF333636)
+
+// ── Dark On-Surface ───────────────────────────────────────────────────────────
+val DarkOnSurface        = Color(0xFFE1E3E3)
+val DarkOnSurfaceVariant = Color(0xFFBFAEA8) // warm tint preserved
+
+// ── Dark Outline ──────────────────────────────────────────────────────────────
+val DarkOutline        = Color(0xFF9A8078)
+val DarkOutlineVariant = Color(0xFF52342A)
 
 //--Incident Severity Colors---
 val UnderControl = Color(0xFF388E3C)

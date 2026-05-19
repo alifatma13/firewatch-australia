@@ -2,6 +2,7 @@ package com.alifatma.firewatch.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,7 +24,7 @@ fun ErrorMessageComponent(message: String, modifier: Modifier) {
         Text(
             text = message,
             modifier = Modifier.padding(16.dp),
-            color = androidx.compose.ui.graphics.Color.Red
+            color = MaterialTheme.colorScheme.error
         )
     }
 }
