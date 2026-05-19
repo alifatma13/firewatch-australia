@@ -7,8 +7,13 @@ import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+
+/** Composition local for the warm card background token — switches on dark mode. */
+val LocalCardContainerColor = staticCompositionLocalOf<Color> { SurfaceContainer }
 
 // ── Light colour scheme (The Sentinel Aesthetic) ────────────────────────────
 private val LightColors = lightColorScheme(
@@ -41,7 +46,7 @@ private val LightColors = lightColorScheme(
 
 // ── Dark colour scheme ───────────────────────────────────────────────────────
 private val DarkColors = darkColorScheme(
-    primary                = PrimaryContainer,  // lighter red on dark
+    primary                = PrimaryContainer,   // lighter red on dark bg
     onPrimary              = OnPrimaryContainer,
     primaryContainer       = Primary,
     onPrimaryContainer     = OnPrimary,
@@ -53,10 +58,17 @@ private val DarkColors = darkColorScheme(
     onTertiary             = OnTertiaryContainer,
     tertiaryContainer      = Tertiary,
     onTertiaryContainer    = OnTertiary,
-    surface                = Color(0xFF1A1C1C),
-    onSurface              = Color(0xFFE1E3E3),
-    outline                = OutlineVariant,
-    outlineVariant         = Outline,
+    surface                = DarkSurface,
+    onSurface              = DarkOnSurface,
+    surfaceVariant         = DarkSurfaceContainerLow,
+    onSurfaceVariant       = DarkOnSurfaceVariant,
+    surfaceContainer       = DarkSurfaceContainer,
+    surfaceContainerHigh   = DarkSurfaceContainerHigh,
+    surfaceContainerHighest= DarkSurfaceContainerHighest,
+    surfaceContainerLow    = DarkSurfaceContainerLow,
+    surfaceContainerLowest = DarkSurfaceContainerLowest,
+    outline                = DarkOutline,
+    outlineVariant         = DarkOutlineVariant,
     error                  = Color(0xFFFFB4AB),
     onError                = Color(0xFF690005),
 )
@@ -76,10 +88,14 @@ fun FireWatchTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    MaterialTheme(
-        colorScheme = if (darkTheme) DarkColors else LightColors,
-        typography  = FireWatchTypography,
-        shapes      = FireWatchShapes,
-        content     = content
-    )
+    CompositionLocalProvider(
+        LocalCardContainerColor provides if (darkTheme) DarkCardContainer else SurfaceContainer
+    ) {
+        MaterialTheme(
+            colorScheme = if (darkTheme) DarkColors else LightColors,
+            typography  = FireWatchTypography,
+            shapes      = FireWatchShapes,
+            content     = content
+        )
+    }
 }

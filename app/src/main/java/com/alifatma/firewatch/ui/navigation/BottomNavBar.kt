@@ -6,13 +6,12 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.alifatma.firewatch.ui.theme.FireWatchTypography
-import com.alifatma.firewatch.ui.theme.PrimaryContainer
 
 
 @Composable
@@ -24,10 +23,9 @@ fun BottomNavBar(
 
     BottomNavigation(
         modifier = Modifier.navigationBarsPadding(),
-        backgroundColor = PrimaryContainer,
-        contentColor = Color.White,
-
-        ) {
+        backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+        contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+    ) {
         Routes.BottomNavItems.forEach { item ->
             BottomNavigationItem(
                 icon = { Icon(item.icon, contentDescription = item.label) },

@@ -24,6 +24,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,16 +36,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.alifatma.firewatch.R
 import com.alifatma.firewatch.ui.model.FireIncidentUiModel
-import com.alifatma.firewatch.ui.theme.CardContainer
 import com.alifatma.firewatch.ui.theme.FireWatchTypography
-import com.alifatma.firewatch.ui.theme.OnSurfaceVariant
-import com.alifatma.firewatch.ui.theme.PrimaryContainer
-import com.alifatma.firewatch.ui.theme.SurfaceContainer
+import com.alifatma.firewatch.ui.theme.LocalCardContainerColor
 import com.alifatma.firewatch.ui.util.formatPublishedDate
 import com.alifatma.firewatch.ui.util.getColorForAlertLevel
 import com.alifatma.firewatch.ui.util.getColorForStatus
 import com.alifatma.firewatch.ui.util.toCamelCase
-import androidx.compose.foundation.shape.CircleShape
 
 /**
  * Lazy loaded incident item component
@@ -68,7 +65,7 @@ fun IncidentItemComponent(
             .padding(vertical = 4.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(1.dp),
-        colors = CardDefaults.cardColors(containerColor = CardContainer)
+        colors = CardDefaults.cardColors(containerColor = LocalCardContainerColor.current)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             // Alert Level and Updated Time
@@ -90,7 +87,7 @@ fun IncidentItemComponent(
                 }
                 Spacer(modifier = Modifier.weight(1f))
                 incident.updated?.let {
-                    Text(text = it, style = FireWatchTypography.labelSmall, color = OnSurfaceVariant)
+                    Text(text = it, style = FireWatchTypography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
             Spacer(modifier = Modifier.height(12.dp))
@@ -117,7 +114,7 @@ fun IncidentItemComponent(
                         Icon(
                             Icons.Outlined.LocationOn,
                             contentDescription = stringResource(R.string.incident_location_content_description),
-                            tint = OnSurfaceVariant,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(16.dp)
                         )
                         incident.location?.let {
@@ -125,7 +122,7 @@ fun IncidentItemComponent(
                                 Text(
                                     text = it.toCamelCase(),
                                     style = FireWatchTypography.bodySmall,
-                                    color = OnSurfaceVariant
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                         }
                     }
@@ -134,7 +131,7 @@ fun IncidentItemComponent(
                             text = stringResource(R.string.incident_council_area_format, it),
                             modifier = Modifier.padding(start = 20.dp),
                             style = FireWatchTypography.bodySmall,
-                            color = OnSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
 
@@ -147,7 +144,7 @@ fun IncidentItemComponent(
                         Text(
                             stringResource(R.string.incident_category_label),
                             style = FireWatchTypography.labelSmall,
-                            color = OnSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
                             text = incident.category ?: unknownValue,
@@ -163,7 +160,7 @@ fun IncidentItemComponent(
                         Text(
                             stringResource(R.string.incident_impact_size_label),
                             style = FireWatchTypography.labelSmall,
-                            color = OnSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
                             text = incident.size ?: unknownValue,
@@ -178,7 +175,7 @@ fun IncidentItemComponent(
                         Text(
                             stringResource(R.string.incident_published_label),
                             style = FireWatchTypography.labelSmall,
-                            color =OnSurfaceVariant
+                            color =MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
                             text = formatPublishedDate(incident.pubDate, unknownValue),
@@ -190,7 +187,7 @@ fun IncidentItemComponent(
                         Text(
                             stringResource(R.string.incident_type_label),
                             style = FireWatchTypography.labelSmall,
-                            color = OnSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
                             text = incident.type ?: unknownValue,
@@ -208,7 +205,7 @@ fun IncidentItemComponent(
             ) {
                 Button(
                     onClick = onViewMap,
-                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryContainer),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
@@ -259,7 +256,7 @@ private fun RowScope.ResposibleAgency(
         Text(
             stringResource(R.string.incident_agency_label),
             style = FireWatchTypography.labelSmall,
-            color =OnSurfaceVariant
+            color =MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
             text = incident.responsibleAgency ?: unknownValue,
@@ -278,7 +275,7 @@ private fun RowScope.IncidentStatus(
         Text(
             stringResource(R.string.incident_status_label),
             style = FireWatchTypography.labelSmall,
-            color = OnSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
             text = incident.status ?: unknownValue,

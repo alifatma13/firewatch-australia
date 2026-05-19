@@ -10,12 +10,13 @@ import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.alifatma.firewatch.ui.theme.FireWatchTypography
-import com.alifatma.firewatch.ui.theme.Primary
 
 // Custom Top App Bar with title, search and settings
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,11 +37,11 @@ fun FireWatchTopAppBar(
                 Icon(Icons.Filled.Tune, contentDescription = "Filter/Settings")
             }
         },
-        colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
-            titleContentColor = Primary,
-            navigationIconContentColor = Color.DarkGray,
-            actionIconContentColor = Color.DarkGray
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            actionIconContentColor = MaterialTheme.colorScheme.onSurface
         )
     )
 }
@@ -53,7 +54,7 @@ fun Title() {
             fontWeight = FontWeight.Bold,
             letterSpacing = 2.sp
         ),
-        color = Primary
+        color = MaterialTheme.colorScheme.primary
     )
 }
 

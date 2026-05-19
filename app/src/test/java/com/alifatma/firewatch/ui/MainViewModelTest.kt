@@ -54,6 +54,7 @@ class MainViewModelTest {
         val repository = IncidentRepositoryImpl(mockApiService)
 
         val viewModel = MainViewModel(repository)
+        viewModel.load()
         advanceUntilIdle()
 
         assertEquals(RfsUiState.Error("network error"), viewModel.uiState.value)
@@ -70,6 +71,7 @@ class MainViewModelTest {
         val repository = IncidentRepositoryImpl(mockApiService)
 
         val viewModel = MainViewModel(repository)
+        viewModel.load()
         advanceUntilIdle()
 
         assertEquals(RfsUiState.Success(singlePointIncident.map{ it.toUiModel()}), viewModel.uiState.value)
@@ -89,6 +91,7 @@ class MainViewModelTest {
         val repository = IncidentRepositoryImpl(mockApiService)
 
         val viewModel = MainViewModel(repository)
+        viewModel.load()
         advanceUntilIdle()
 
         assertTrue((viewModel.uiState.value as? RfsUiState.Success)?.incidents?.isEmpty() == true)
@@ -109,6 +112,7 @@ class MainViewModelTest {
         val repository = IncidentRepositoryImpl(mockApiService)
 
         val viewModel = MainViewModel(repository)
+        viewModel.load()
         advanceUntilIdle()
 
         when (val state = viewModel.uiState.value) {
@@ -137,6 +141,7 @@ class MainViewModelTest {
 
 
         val viewModel = MainViewModel(repository)
+        viewModel.load()
         advanceUntilIdle()
 
         when (val state = viewModel.uiState.value) {
@@ -166,6 +171,7 @@ class MainViewModelTest {
 
 
             val viewModel = MainViewModel(repository)
+            viewModel.load()
             advanceUntilIdle()
 
             when (val state = viewModel.uiState.value) {
