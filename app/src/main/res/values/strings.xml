@@ -10,6 +10,7 @@
     <string name="incident_view_map">VIEW MAP</string>
     <string name="incident_share_content_description">Share</string>
     <string name="incident_bookmark_content_description">Bookmark</string>
-    <string name="incident_council_area_format">Council Area %1$s</string>
+    <string name="incident_expand">Expand Incident</string>
+    <string name="incident_council_area_format">Council Area ● %1$s</string>
     <string name="incident_unknown_value">-</string>
 </resources>
