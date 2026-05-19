@@ -25,6 +25,7 @@ val SurfaceContainerLowest = Color(0xFFFFFFFF)  // highest lift (card on panel)
 val SurfaceContainerLow    = Color(0xFFF3F3F3)  // inactive/background panels
 val Surface                = Color(0xFFF9F9F9)  // base layer
 val SurfaceContainer       = Color(0xFFEEEEEE)  // primary content containers
+val CardContainer       = Color(0xFFFFF8F6)  // primary content containers
 val SurfaceContainerHigh   = Color(0xFFE8E8E8)  // active/selected zones
 val SurfaceContainerHighest= Color(0xFFE2E2E2)  // input track fill
 
