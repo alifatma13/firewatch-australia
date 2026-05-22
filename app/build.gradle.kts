@@ -79,7 +79,7 @@ dependencies {
 
     // hilt and annotation processing
     implementation(libs.hilt.android)
-    implementation(libs.ui)
+    implementation(libs.androidx.ui)
     ksp(libs.hilt.android.compiler)
 
     // test
@@ -103,7 +103,6 @@ dependencies {
 
     // compose
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.ui.text.google.fonts)
@@ -114,11 +113,10 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.maps.compose)
     implementation(libs.androidx.material.icons.extended)
-    implementation("androidx.compose.material:material-icons-extended:1.6.1")
-    implementation("androidx.compose.material:material:1.6.1")
+    implementation(libs.androidx.material)
     implementation(libs.lottie.compose)
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    implementation("org.jsoup:jsoup:1.17.2")
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.jsoup)
 
 
 

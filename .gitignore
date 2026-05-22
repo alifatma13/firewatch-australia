@@ -59,3 +59,5 @@ service_account.json
 
 # Project planning docs
 COMPOSE_UI_ROADMAP.md
+
+.vscode/

@@ -21,8 +21,6 @@ class IncidentRepositoryImpl
             return Result.Error(message = e.message.orEmpty(), exception = e, errorType = ErrorType.NETWORK)
         } catch (e: HttpException) {
             return Result.Error(message = e.message.orEmpty(), exception = e, errorType = ErrorType.HTTP)
-        } catch (e: Exception) {
-            return Result.Error(message = e.message.orEmpty(), exception = e, errorType = ErrorType.UNKNOWN)
         }
     }
 
