@@ -6,18 +6,20 @@ import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.alifatma.firewatch.ui.theme.FireWatchTypography
+import com.alifatma.firewatch.ui.util.TestTags
 
 
 // Header component for main screen
 @Composable
 fun HeaderComponent(modifier: Modifier) {
-    Column(modifier = modifier.padding(start = 8.dp)) {
+    Column(modifier = modifier.padding(start = 8.dp).testTag(TestTags.HEADER_COMPONENT)) {
         Text(
             text = "TACTICAL OVERVIEW",
             style = FireWatchTypography.titleSmall,

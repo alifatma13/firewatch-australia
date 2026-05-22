@@ -15,7 +15,17 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
+import javax.inject.Named
+import javax.inject.Qualifier
 
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RFSRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class QLDRetrofit
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -65,7 +75,8 @@ object NetworkModule {
     // Retrofit
     @Provides
     @Singleton
-    fun provideRetrofit(
+    @RFSRetrofit
+    fun provideRetrofitRFS(
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory
     ): Retrofit {
@@ -78,10 +89,27 @@ object NetworkModule {
 
     }
 
+
+    @Provides
+    @Singleton
+    @QLDRetrofit
+    fun provideRetrofitQLD(
+        okHttpClient: OkHttpClient,
+        converterFactory: Converter.Factory
+    ): Retrofit {
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL) // Change base url for qld
+            .client(okHttpClient)
+            .addConverterFactory(converterFactory)
+            .build()
+
+    }
+
     //API Service
     @Provides
     @Singleton
-    fun providesRfsApiService(retrofit: Retrofit) : RfsApiService{
+    fun providesRfsApiService(@RFSRetrofit retrofit: Retrofit) : RfsApiService{
         return retrofit.create<RfsApiService>(RfsApiService::class.java)
     }
 

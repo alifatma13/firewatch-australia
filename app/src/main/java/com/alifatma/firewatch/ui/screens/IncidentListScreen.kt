@@ -27,15 +27,19 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.alifatma.firewatch.R
 import com.alifatma.firewatch.ui.RfsUiState
+import com.alifatma.firewatch.ui.components.EmptyIncidentListComponent
 import com.alifatma.firewatch.ui.components.ErrorMessageComponent
 import com.alifatma.firewatch.ui.components.FireLoadingIndicator
 import com.alifatma.firewatch.ui.components.HeaderComponent
 import com.alifatma.firewatch.ui.components.IncidentItemComponent
+import com.alifatma.firewatch.ui.util.TestTags
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
 
 
 @Composable
@@ -85,25 +89,35 @@ fun IncidentListScreen(
                 )
 
                 is RfsUiState.Success -> {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(4.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.Start,
-                        state = listState
-                    ) {
-                        items(uiState.incidents) { incident ->
-                            IncidentItemComponent(
-                                incident = incident,
-                                onViewMap = { incident.id?.let { onIncidentClick(it) } },
-                                onToggleExpand = {
-                                    val id = incident.id ?: return@IncidentItemComponent
-                                    expandedById[id] = !(expandedById[id] ?: false)
-                                },
-                                expanded = expandedById[incident.id] == true)
+                    if (uiState.incidents.isEmpty()) {
+                        EmptyIncidentListComponent(
+                            message = "No active incidents right now",
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(4.dp)
+                                .testTag(TestTags.INCIDENT_LIST),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalAlignment = Alignment.Start,
+                            state = listState
+                        ) {
+                            items(uiState.incidents) { incident ->
+                                IncidentItemComponent(
+                                    incident = incident,
+                                    onViewMap = { incident.id?.let { onIncidentClick(it) } },
+                                    onToggleExpand = {
+                                        val id = incident.id ?: return@IncidentItemComponent
+                                        expandedById[id] = !(expandedById[id] ?: false)
+                                    },
+                                    expanded = expandedById[incident.id] == true
+                                )
 
+                            }
                         }
+
                     }
 
                 }
@@ -120,9 +134,10 @@ fun IncidentListScreen(
             exit = fadeOut()
         ) {
             FloatingActionButton(
+                modifier = Modifier.testTag(TestTags.SCROLL_TO_TOP_FAB),
                 onClick = { scrollToTop(scope, listState) }) {
                 Icon(
-                    imageVector = Icons.Filled.ArrowUpward, contentDescription = "Scroll to top"
+                    imageVector = Icons.Filled.ArrowUpward, contentDescription = stringResource(R.string.scroll_to_top_content_description)
                 )
             }
         }

@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +42,7 @@ import com.alifatma.firewatch.ui.theme.LocalCardContainerColor
 import com.alifatma.firewatch.ui.util.formatPublishedDate
 import com.alifatma.firewatch.ui.util.getColorForAlertLevel
 import com.alifatma.firewatch.ui.util.getColorForStatus
+import com.alifatma.firewatch.ui.util.TestTags
 import com.alifatma.firewatch.ui.util.toCamelCase
 
 /**
@@ -102,7 +104,7 @@ fun IncidentItemComponent(
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(modifier = Modifier.fillMaxWidth()) {
                     IncidentStatus(incident, unknownValue)
-                    ResposibleAgency(incident, unknownValue)
+                    ResponsibleAgency(incident, unknownValue)
                 }
                 Spacer(modifier = Modifier.height(12.dp))
             }
@@ -167,7 +169,7 @@ fun IncidentItemComponent(
                             style = FireWatchTypography.bodyMedium.copy(fontWeight = FontWeight.Normal)
                         )
                     }
-                    ResposibleAgency(incident, unknownValue)
+                    ResponsibleAgency(incident, unknownValue)
                 }
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(modifier = Modifier.fillMaxWidth()) {
@@ -228,7 +230,10 @@ fun IncidentItemComponent(
                     )
                 }
 
-                IconButton(onToggleExpand) {
+                IconButton(
+                    onClick = onToggleExpand,
+                    modifier = Modifier.testTag(TestTags.INCIDENT_EXPAND_BUTTON)
+                ) {
                     Icon(
                         imageVector = if (!expanded) Icons.Filled.KeyboardArrowDown else Icons.Filled.KeyboardArrowUp,
                         contentDescription = stringResource(R.string.incident_expand)
@@ -248,7 +253,7 @@ fun IncidentItemComponent(
 }
 
 @Composable
-private fun RowScope.ResposibleAgency(
+private fun RowScope.ResponsibleAgency(
     incident: FireIncidentUiModel,
     unknownValue: String
 ) {
