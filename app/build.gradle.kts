@@ -26,6 +26,9 @@ android{
             "RFS_NSW_GOV_AU",
             "\"https://www.rfs.nsw.gov.au/\""
         )
+
+        manifestPlaceholders["MAPS_API_KEY"] =
+            project.findProperty("MAPS_API_KEY") ?: ""
     }
 
     buildTypes {
