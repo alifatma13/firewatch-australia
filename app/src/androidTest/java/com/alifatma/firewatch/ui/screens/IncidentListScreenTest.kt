@@ -503,7 +503,7 @@ class IncidentListScreenTest {
             .onFirst()
             .performClick()
 
-        composeTestRule.onNodeWithText("Council Area ● Sydney").assertExists()
+        composeTestRule.onNodeWithText("Council Area ● City of Sydney").assertExists()
         composeTestRule.onNodeWithText("IMPACT SIZE", ignoreCase = true).assertExists()
         composeTestRule.onNodeWithText("1 ha", ignoreCase = true).assertExists()
 

@@ -1,15 +1,11 @@
 package com.alifatma.firewatch.ui
 
-import com.alifatma.firewatch.data.Result
 import com.alifatma.firewatch.data.RfsFeatureCollection
 import com.alifatma.firewatch.data.RfsFeaturesStub.geometryCollectionIncident
 import com.alifatma.firewatch.data.RfsFeaturesStub.multiplePolygonOnlyList
 import com.alifatma.firewatch.data.RfsFeaturesStub.pointIncidents
 import com.alifatma.firewatch.data.RfsFeaturesStub.singlePointIncident
-import com.alifatma.firewatch.data.extractCenter
-import com.alifatma.firewatch.data.extractPolygons
 import com.alifatma.firewatch.network.RfsApiService
-import com.alifatma.firewatch.repository.IncidentRepository
 import com.alifatma.firewatch.repository.IncidentRepositoryImpl
 import com.alifatma.firewatch.ui.model.toUiModel
 import io.mockk.coEvery
@@ -22,6 +18,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
+import java.io.IOException
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class MainViewModelTest {
@@ -49,7 +46,7 @@ class MainViewModelTest {
     fun `init load updates uiState to error when repository returns error`() = runTest {
         val mockApiService = mockk<RfsApiService>()
         // Simulate an error response from the API
-         coEvery { mockApiService.getMajorIncidents() } throws Exception("network error")
+         coEvery { mockApiService.getMajorIncidents() } throws IOException("Network Error")
         // integrated test with real repository and mocked API
         val repository = IncidentRepositoryImpl(mockApiService)
 
@@ -57,7 +54,7 @@ class MainViewModelTest {
         viewModel.load()
         advanceUntilIdle()
 
-        assertEquals(RfsUiState.Error("network error"), viewModel.uiState.value)
+        assertEquals(RfsUiState.Error("Network Error"), viewModel.uiState.value)
     }
 
     @Test
