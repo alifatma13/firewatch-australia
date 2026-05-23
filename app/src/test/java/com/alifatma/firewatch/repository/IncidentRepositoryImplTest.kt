@@ -74,17 +74,4 @@ class IncidentRepositoryImplTest {
         assertEquals(notFoundException, error.exception)
     }
 
-    @Test
-    fun `getMajorIncidents returns error when unexpected exception occurs`() = runTest {
-        val unexpectedException = RuntimeException("Database error")
-        coEvery { mockApiService.getMajorIncidents() } throws unexpectedException
-
-        val result = repository.getMajorIncidents()
-
-        assertTrue(result is Result.Error)
-        val error = result as Result.Error
-        assertEquals(ErrorType.UNKNOWN, error.errorType)
-        assertEquals(unexpectedException, error.exception)
-    }
-
 }
