@@ -630,11 +630,11 @@ class IncidentListScreenTest {
     fun after_scrolling_down_three_items_the_fab_icon_is_visible() {
 
         val incident = listOf(
-            sampleIncident("New Fire Incident"),
-            sampleIncident("Other Fire Incident"),
-            sampleIncident("Another New Fire Incident"),
-            sampleIncident("Bush Fire Incident"),
-            sampleIncident("Planned Fire Incident")
+            sampleIncident("New Fire Incident", "inc-1"),
+            sampleIncident("Other Fire Incident", "inc-2"),
+            sampleIncident("Another New Fire Incident", "inc-3"),
+            sampleIncident("Bush Fire Incident", "inc-4"),
+            sampleIncident("Planned Fire Incident", "inc-5")
         )
 
         composeTestRule.setContent {
@@ -663,11 +663,11 @@ class IncidentListScreenTest {
     @Test
     fun perform_click_on_fab_icon_and_it_scrolls_to_top() {
         val incident = listOf(
-            sampleIncident("New Fire Incident"),
-            sampleIncident("Other Fire Incident"),
-            sampleIncident("Another New Fire Incident"),
-            sampleIncident("Bush Fire Incident"),
-            sampleIncident("Planned Fire Incident")
+            sampleIncident("New Fire Incident", "inc-1"),
+            sampleIncident("Other Fire Incident", "inc-2"),
+            sampleIncident("Another New Fire Incident", "inc-3"),
+            sampleIncident("Bush Fire Incident", "inc-4"),
+            sampleIncident("Planned Fire Incident", "inc-5")
         )
 
         composeTestRule.setContent {
