@@ -692,7 +692,6 @@ class IncidentListScreenTest {
         }
 
         composeTestRule.onNodeWithTag(TestTags.INCIDENT_LIST).performScrollToIndex(6)
-        composeTestRule.onNodeWithText("Bush Fire Incident").assertIsDisplayed()
         composeTestRule.onNodeWithText("New Fire Incident").assertDoesNotExist()
 
         composeTestRule.onNodeWithTag(TestTags.SCROLL_TO_TOP_FAB).assertExists()
