@@ -52,6 +52,7 @@ android{
     }
 
     testOptions {
+        animationsDisabled = true
         unitTests.isReturnDefaultValues = true
         unitTests.all {
             it.jvmArgs("-XX:+EnableDynamicAgentLoading")
