@@ -102,7 +102,7 @@ jobs:
             --type instrumentation \
             --app  /home/runner/work/firewatch-australia/firewatch-australia/app-debug.apk \
             --test  /home/runner/work/firewatch-australia/firewatch-australia/app-debug-androidTest.apk \
-            --device model=shiba,version=34
+            --device model=shiba,version=34 \
             --environment-variables disableAnimations=true
           
   distribute:
