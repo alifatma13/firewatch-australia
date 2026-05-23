@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -12,8 +14,6 @@ import androidx.navigation.navArgument
 import com.alifatma.firewatch.ui.MainViewModel
 import com.alifatma.firewatch.ui.screens.IncidentListScreen
 import com.alifatma.firewatch.ui.screens.MapScreen
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun FireWatchNavGraph(
@@ -21,14 +21,16 @@ fun FireWatchNavGraph(
     modifier: Modifier
 ) {
 
+    val viewModel: MainViewModel = hiltViewModel()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle() // is life cycle aware
+
+
     NavHost(
         navController = navHostController,
         startDestination = Routes.LIST,
         modifier = modifier
     ) {
         composable(Routes.LIST) {
-            val viewModel: MainViewModel = hiltViewModel()
-            val uiState by viewModel.uiState.collectAsStateWithLifecycle() // is life cycle aware
             LaunchedEffect(Unit) { // one off load of list items
                 viewModel.load()
             }
@@ -43,7 +45,7 @@ fun FireWatchNavGraph(
         }
 
         composable(Routes.MAP) {
-            MapScreen(focusedIncidentId = null, modifier = Modifier)
+            MapScreen(uiState = uiState,focusedIncidentId = null, modifier = Modifier)
         }
 
         composable(
