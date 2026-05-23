@@ -634,7 +634,12 @@ class IncidentListScreenTest {
             sampleIncident("Other Fire Incident", "inc-2"),
             sampleIncident("Another New Fire Incident", "inc-3"),
             sampleIncident("Bush Fire Incident", "inc-4"),
-            sampleIncident("Planned Fire Incident", "inc-5")
+            sampleIncident("Planned Fire Incident", "inc-5"),
+            sampleIncident("Fire 6", id = "inc-6"),
+            sampleIncident("Fire 7", id = "inc-7"),
+            sampleIncident("Fire 8", id = "inc-8"),
+            sampleIncident("Fire 9", id = "inc-9"),
+            sampleIncident("Fire 10", id = "inc-10"),
         )
 
         composeTestRule.setContent {
@@ -648,7 +653,7 @@ class IncidentListScreenTest {
         }
 
         composeTestRule.onNodeWithTag(TestTags.SCROLL_TO_TOP_FAB).assertDoesNotExist()
-        composeTestRule.onNodeWithTag(TestTags.INCIDENT_LIST).performScrollToIndex(3)
+        composeTestRule.onNodeWithTag(TestTags.INCIDENT_LIST).performScrollToIndex(6)
         composeTestRule.onNodeWithTag(TestTags.SCROLL_TO_TOP_FAB).assertExists()
 
         composeTestRule
@@ -667,7 +672,13 @@ class IncidentListScreenTest {
             sampleIncident("Other Fire Incident", "inc-2"),
             sampleIncident("Another New Fire Incident", "inc-3"),
             sampleIncident("Bush Fire Incident", "inc-4"),
-            sampleIncident("Planned Fire Incident", "inc-5")
+            sampleIncident("Planned Fire Incident", "inc-5"),
+            sampleIncident("Fire 6", id = "inc-6"),
+            sampleIncident("Fire 7", id = "inc-7"),
+            sampleIncident("Fire 8", id = "inc-8"),
+            sampleIncident("Fire 9", id = "inc-9"),
+            sampleIncident("Fire 10", id = "inc-10"),
+
         )
 
         composeTestRule.setContent {
@@ -680,7 +691,7 @@ class IncidentListScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithTag(TestTags.INCIDENT_LIST).performScrollToIndex(3)
+        composeTestRule.onNodeWithTag(TestTags.INCIDENT_LIST).performScrollToIndex(6)
         composeTestRule.onNodeWithText("Bush Fire Incident").assertIsDisplayed()
         composeTestRule.onNodeWithText("New Fire Incident").assertDoesNotExist()
 
