@@ -45,7 +45,7 @@ fun FireWatchNavGraph(
         }
 
         composable(Routes.MAP) {
-            MapScreen(uiState = uiState,focusedIncidentId = null, modifier = Modifier)
+            MapScreen(uiState = uiState, focusedIncidentId = null, modifier = Modifier)
         }
 
         composable(
@@ -53,7 +53,7 @@ fun FireWatchNavGraph(
             arguments = listOf(navArgument(Routes.INCIDENT_ID_ARG) { type = NavType.StringType })
         ) { backStackEntry ->
             val incidentId = backStackEntry.arguments?.getString(Routes.INCIDENT_ID_ARG)
-            MapScreen(focusedIncidentId = incidentId, modifier = Modifier)
+            MapScreen(uiState = uiState, focusedIncidentId = incidentId, modifier = Modifier)
         }
 
     }

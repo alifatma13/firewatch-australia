@@ -1,8 +1,10 @@
 package com.alifatma.firewatch.ui.util
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import com.alifatma.firewatch.ui.model.AlertLevel
 import com.alifatma.firewatch.ui.model.IncidentStatus
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
@@ -47,8 +49,28 @@ internal fun getColorForAlertLevel(alert: String?): Color{
         "emergency warning" -> AlertLevel.EMERGENCY_WARNING.color
         "watch and act" -> AlertLevel.WATCH_AND_ACT.color
         "advice" -> AlertLevel.ADVICE.color
-        "planned burn" -> AlertLevel.PLANNED_BURN.color
-        else-> Color.Gray
+        else-> AlertLevel.PLANNED_BURN.color
     }
 }
+
+internal fun alertLevelToHue(alertLevel: String?): Float {
+    return when (alertLevel?.lowercase()) {
+        "emergency warning" -> AlertLevel.EMERGENCY_WARNING.color.darken().toHue()
+        "watch and act" -> AlertLevel.WATCH_AND_ACT.color.darken().toHue()
+        "advice" -> AlertLevel.ADVICE.color.darken().toHue()
+        else -> AlertLevel.PLANNED_BURN.color.darken().toHue()
+    }
+}
+
+fun Color.toHue(): Float {
+    val hsv = FloatArray(3)
+    android.graphics.Color.colorToHSV(this.toArgb(), hsv)
+    return hsv[0]
+}
+
+fun Color.darken(factor: Float = 1.5f): Color =
+    Color(red * factor, green * factor, blue * factor, alpha)
+
+
+
 
