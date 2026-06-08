@@ -131,6 +131,10 @@ dependencies {
     implementation(libs.lottie.compose)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.jsoup)
+    implementation(libs.maps.compose.utils)
+
+
+
 
 
 

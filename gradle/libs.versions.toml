@@ -72,6 +72,8 @@ mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
+maps-compose-utils = { group = "com.google.maps.android", name = "maps-compose-utils", version.ref = "mapsCompose" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

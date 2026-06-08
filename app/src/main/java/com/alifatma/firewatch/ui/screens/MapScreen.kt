@@ -1,5 +1,8 @@
 package com.alifatma.firewatch.ui.screens
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -33,6 +36,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.alifatma.firewatch.ui.RfsUiState
@@ -52,6 +56,8 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.Polygon
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberUpdatedMarkerState
+import androidx.core.graphics.createBitmap
+import com.alifatma.firewatch.R
 
 
 @Composable
@@ -135,6 +141,7 @@ fun AustraliaMap(
     var screenHeight by remember { mutableIntStateOf(0) }
     var cardWidth by remember { mutableIntStateOf(0) }
     var cardHeight by remember { mutableIntStateOf(0) }
+    val context = LocalContext.current
 
 
 
