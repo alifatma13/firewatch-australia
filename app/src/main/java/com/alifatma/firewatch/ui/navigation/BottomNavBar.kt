@@ -10,8 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.alifatma.firewatch.ui.theme.FireWatchTypography
+import androidx.compose.ui.platform.testTag
 
 
 @Composable
@@ -19,7 +21,7 @@ fun BottomNavBar(
     navController: NavController
 ) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry.value?.destination?.route
+    val destination = navBackStackEntry.value?.destination
 
     BottomNavigation(
         modifier = Modifier.navigationBarsPadding(),
@@ -27,12 +29,20 @@ fun BottomNavBar(
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
     ) {
         Routes.BottomNavItems.forEach { item ->
+            val isSelected = destination
+                ?.hierarchy
+                ?.any { navDestination ->
+                    navDestination.route == item.route ||
+                            (item.route == Routes.MAP && navDestination.route == Routes.MAP_FOCUSED)
+                } == true
+
             BottomNavigationItem(
+                modifier = Modifier.testTag("tab_${item.route}"),
                 icon = { Icon(item.icon, contentDescription = item.label) },
                 label = { Text(item.label, style = FireWatchTypography.labelMedium) },
-                selected = currentRoute == item.route,
+                selected = isSelected,
                 onClick = {
-                    if (currentRoute != item.route) {
+                    if (!isSelected) {
                         navController.navigate(item.route) {
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = false
