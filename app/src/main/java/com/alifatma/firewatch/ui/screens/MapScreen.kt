@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.alifatma.firewatch.ui.RfsUiState
@@ -58,6 +59,8 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberUpdatedMarkerState
 import androidx.core.graphics.createBitmap
 import com.alifatma.firewatch.R
+import com.alifatma.firewatch.ui.components.MapIncidentInfoCard
+import com.alifatma.firewatch.ui.util.TestTags
 
 
 @Composable
@@ -138,10 +141,8 @@ fun AustraliaMap(
     var selectedIncident by remember { mutableStateOf<FireIncidentUiModel?>(null) }
 
     var screenWidth by remember { mutableIntStateOf(0) }
-    var screenHeight by remember { mutableIntStateOf(0) }
     var cardWidth by remember { mutableIntStateOf(0) }
     var cardHeight by remember { mutableIntStateOf(0) }
-    val context = LocalContext.current
 
 
 
@@ -149,11 +150,10 @@ fun AustraliaMap(
 
     Box(modifier = modifier.onGloballyPositioned {
         screenWidth = it.size.width
-        screenHeight = it.size.height
-    }) {
+    }.testTag(TestTags.MAP_CONTAINER),
+    ) {
 
         GoogleMap(
-            modifier = modifier,
             cameraPositionState = cameraPositionState,
             onMapLoaded = onMapLoaded,
             onMapClick = { selectedIncident = null }
@@ -213,58 +213,15 @@ fun AustraliaMap(
                     val xPos = (markerPoint.x - cardWidth / 2)
                         .coerceIn(0, (screenWidth - cardWidth).coerceAtLeast(0))
 
-
-                    Card(
+                    MapIncidentInfoCard(
+                        incident = incident,
                         modifier = Modifier
                             .absoluteOffset { IntOffset(xPos, yPos) }
                             .onGloballyPositioned {
                                 cardWidth = it.size.width
                                 cardHeight = it.size.height
                             }
-                            .width(250.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = LocalCardContainerColor.current
-                        )
-
-                    ) {
-
-                        Column(modifier = Modifier.padding(0.dp)) {
-
-                            val alertColor = getColorForAlertLevel(incident.alertLevel)
-
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(alertColor)
-                                    .padding(horizontal = 12.dp, vertical = 6.dp)
-                            ) {
-                                Text(
-                                    text = incident.alertLevel?.uppercase() ?: "UNKNOWN",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = Color.White
-                                )
-                            }
-
-                            Column(modifier = Modifier.padding(12.dp)) {
-
-                                Text(
-                                    text = incident.title,
-                                    style = MaterialTheme.typography.titleSmall,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
-
-                                Spacer(modifier = Modifier.height(8.dp))
-                                HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                // data rows — label in OnSurfaceVariant, value in OnSurface
-                                InfoRow(label = "STATUS", value = incident.status)
-                                InfoRow(label = "TYPE", value = incident.type)
-                                InfoRow(label = "AGENCY", value = incident.responsibleAgency)
-                            }
-                        }
-
-                    }
+                    )
 
                 }
             }
@@ -274,25 +231,4 @@ fun AustraliaMap(
     }
 }
 
-
-@Composable
-private fun InfoRow(label: String, value: String?) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 2.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Text(
-            text = value ?: "-",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-    }
-}
 

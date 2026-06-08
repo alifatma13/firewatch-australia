@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.alifatma.firewatch.ui.theme.FireWatchTypography
+import androidx.compose.ui.platform.testTag
 
 
 @Composable
@@ -36,6 +37,7 @@ fun BottomNavBar(
                 } == true
 
             BottomNavigationItem(
+                modifier = Modifier.testTag("tab_${item.route}"),
                 icon = { Icon(item.icon, contentDescription = item.label) },
                 label = { Text(item.label, style = FireWatchTypography.labelMedium) },
                 selected = isSelected,

@@ -14,5 +14,8 @@ object TestTags {
     const val EMPTY_STATE_TEXT = "empty_state_text"
     const val HEADER_COMPONENT = "header_component"
     const val INCIDENT_EXPAND_BUTTON = "incident_expand_button"
+    const val MAP_CONTAINER = "map_container"
+    const val MAP_INCIDENT_INFO_CARD = "map_incident_info_card"
+
 }
 
