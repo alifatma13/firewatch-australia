@@ -14,4 +14,5 @@
     <string name="scroll_to_top_content_description">Scroll to top</string>
     <string name="incident_council_area_format">Council Area ● %1$s</string>
     <string name="incident_unknown_value">-</string>
+    <string name="incident_offline_message">Device is offline. Showing cached data from %1$s</string>
 </resources>

@@ -19,7 +19,7 @@ import com.alifatma.firewatch.ui.util.TestTags
 // Header component for main screen
 @Composable
 fun HeaderComponent(modifier: Modifier) {
-    Column(modifier = modifier.padding(start = 8.dp).testTag(TestTags.HEADER_COMPONENT)) {
+    Column(modifier = modifier.padding(start = 8.dp, top = 8.dp).testTag(TestTags.HEADER_COMPONENT)) {
         Text(
             text = "TACTICAL OVERVIEW",
             style = FireWatchTypography.titleSmall,
