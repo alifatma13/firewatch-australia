@@ -38,7 +38,10 @@ android{
 
         manifestPlaceholders["MAPS_API_KEY"] =
             localProperties.getProperty("MAPS_API_KEY") ?: ""
+    }
 
+    ksp {
+        arg("room.schemaLocation", "$projectDir/schemas")
     }
 
     buildTypes {
@@ -76,6 +79,10 @@ android{
         buildConfig = true
         compose = true
     }
+}
+
+ksp {
+    arg("room.schemaLocation", "${projectDir}/schemas")
 }
 
 dependencies {
@@ -132,6 +139,14 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.jsoup)
     implementation(libs.maps.compose.utils)
+
+    //room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.work.compiler)
 
 
 

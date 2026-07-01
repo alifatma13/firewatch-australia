@@ -1,12 +1,18 @@
 package com.alifatma.firewatch.di
 
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.alifatma.firewatch.BuildConfig
+import com.alifatma.firewatch.network.AndroidNetworkStatusProvider
+import com.alifatma.firewatch.network.NetworkStatusProvider
 import com.alifatma.firewatch.network.RfsApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import jakarta.inject.Singleton
 import kotlinx.serialization.json.Json
@@ -111,6 +117,24 @@ object NetworkModule {
     @Singleton
     fun providesRfsApiService(@RFSRetrofit retrofit: Retrofit) : RfsApiService{
         return retrofit.create<RfsApiService>(RfsApiService::class.java)
+    }
+
+    //connectivity manager
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(@ApplicationContext context: Context): ConnectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+
+    @Module
+    @InstallIn(SingletonComponent::class)
+    abstract class NetworkStatusModule {
+
+        @Binds
+        @Singleton
+        abstract fun bindNetworkStatusProvider(
+            impl: AndroidNetworkStatusProvider
+        ): NetworkStatusProvider
     }
 
 

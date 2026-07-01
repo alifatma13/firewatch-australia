@@ -6,6 +6,7 @@ import com.alifatma.firewatch.data.extractPolygons
 import com.alifatma.firewatch.repository.IncidentRepository
 import com.alifatma.firewatch.repository.IncidentRepositoryImpl
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
@@ -85,7 +86,11 @@ class RfsApiServiceTest {
     fun `check the first feature from the result`() = runTest {
         enqueueSuccessResponse()
         // integrated test with real repository and mocked API
-        val repository: IncidentRepository = IncidentRepositoryImpl(api)
+        val repository = IncidentRepositoryImpl(
+            api,
+            mockk(relaxed = true),
+            FakeNetworkStatusProvider(online = true)
+        )
 
         val result = repository.getMajorIncidents()
         assertTrue(result is Result.Success)
@@ -95,7 +100,11 @@ class RfsApiServiceTest {
     @Test
     fun `getMajorIncidents second feature has point`() = runTest {
         enqueueSuccessResponse()
-        val repository: IncidentRepository = IncidentRepositoryImpl(api)
+        val repository = IncidentRepositoryImpl(
+            api,
+            mockk(relaxed = true),
+            FakeNetworkStatusProvider(online = true)
+        )
         val result = repository.getMajorIncidents()
         assertTrue(result is Result.Success)
         val secondFeature = result.data.features[1]
@@ -110,7 +119,11 @@ class RfsApiServiceTest {
     @Test
     fun `getMajorIncidents second feature has polygons`() = runTest {
         enqueueSuccessResponse()
-        val repository: IncidentRepository = IncidentRepositoryImpl(api)
+        val repository = IncidentRepositoryImpl(
+            api,
+            mockk(relaxed = true),
+            FakeNetworkStatusProvider(online = true)
+        )
         val result = repository.getMajorIncidents()
         assertTrue(result is Result.Success)
         val secondFeature = result.data.features[1]

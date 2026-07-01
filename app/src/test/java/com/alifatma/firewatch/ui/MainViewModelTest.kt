@@ -5,6 +5,8 @@ import com.alifatma.firewatch.data.RfsFeaturesStub.geometryCollectionIncident
 import com.alifatma.firewatch.data.RfsFeaturesStub.multiplePolygonOnlyList
 import com.alifatma.firewatch.data.RfsFeaturesStub.pointIncidents
 import com.alifatma.firewatch.data.RfsFeaturesStub.singlePointIncident
+import com.alifatma.firewatch.db.dao.IncidentDao
+import com.alifatma.firewatch.network.FakeNetworkStatusProvider
 import com.alifatma.firewatch.network.RfsApiService
 import com.alifatma.firewatch.repository.IncidentRepositoryImpl
 import com.alifatma.firewatch.ui.model.toUiModel
@@ -28,16 +30,21 @@ class MainViewModelTest {
 
     @Test
     fun `init load keeps uiState loading when repository returns loading`() = runTest {
-        val mockApiService : RfsApiService = mockk()
+        val mockApiService: RfsApiService = mockk()
+
         // Simulate a loading state by making the API call suspend indefinitely
         coEvery { mockApiService.getMajorIncidents() } coAnswers {
             kotlinx.coroutines.delay(Long.MAX_VALUE)
             RfsFeatureCollection(type = "FeatureCollection", features = emptyList())
         }
         // integrated test with real repository and mocked API
-        val repository = IncidentRepositoryImpl(mockApiService)
+        val repository = createRepository(mockApiService)
 
-        val viewModel = MainViewModel(repository)
+        val viewModel = MainViewModel(
+            repository, networkStatusProvider = FakeNetworkStatusProvider(
+                online = true
+            )
+        )
         advanceUntilIdle()
         assertTrue(viewModel.uiState.value is RfsUiState.Loading)
     }
@@ -46,11 +53,14 @@ class MainViewModelTest {
     fun `init load updates uiState to error when repository returns error`() = runTest {
         val mockApiService = mockk<RfsApiService>()
         // Simulate an error response from the API
-         coEvery { mockApiService.getMajorIncidents() } throws IOException("Network Error")
+        coEvery { mockApiService.getMajorIncidents() } throws IOException("Network Error")
         // integrated test with real repository and mocked API
-        val repository = IncidentRepositoryImpl(mockApiService)
+        val repository = createRepository(mockApiService)
 
-        val viewModel = MainViewModel(repository)
+        val viewModel = MainViewModel(
+            repository,
+            networkStatusProvider = FakeNetworkStatusProvider(online = true)
+        )
         viewModel.load()
         advanceUntilIdle()
 
@@ -65,13 +75,18 @@ class MainViewModelTest {
             features = singlePointIncident
         )
         // integrated test with real repository and mocked API
-        val repository = IncidentRepositoryImpl(mockApiService)
-
-        val viewModel = MainViewModel(repository)
+        val repository = createRepository(mockApiService)
+        val viewModel = MainViewModel(
+            repository,
+            networkStatusProvider = FakeNetworkStatusProvider(online = true)
+        )
         viewModel.load()
         advanceUntilIdle()
 
-        assertEquals(RfsUiState.Success(singlePointIncident.map{ it.toUiModel()}), viewModel.uiState.value)
+        assertEquals(
+            RfsUiState.Success(singlePointIncident.map { it.toUiModel() }),
+            viewModel.uiState.value
+        )
         assertFalse(viewModel.uiState.value is RfsUiState.Loading)
         assertFalse(viewModel.uiState.value is RfsUiState.Error)
     }
@@ -85,9 +100,12 @@ class MainViewModelTest {
             features = emptyList()
         )
         // integrated test with real repository and mocked API
-        val repository = IncidentRepositoryImpl(mockApiService)
+        val repository = createRepository(mockApiService)
 
-        val viewModel = MainViewModel(repository)
+        val viewModel = MainViewModel(
+            repository,
+            networkStatusProvider = FakeNetworkStatusProvider(online = true)
+        )
         viewModel.load()
         advanceUntilIdle()
 
@@ -106,9 +124,12 @@ class MainViewModelTest {
         )
 
         // integrated test with real repository and mocked API
-        val repository = IncidentRepositoryImpl(mockApiService)
+        val repository = createRepository(mockApiService)
 
-        val viewModel = MainViewModel(repository)
+        val viewModel = MainViewModel(
+            repository,
+            networkStatusProvider = FakeNetworkStatusProvider(online = true)
+        )
         viewModel.load()
         advanceUntilIdle()
 
@@ -134,10 +155,13 @@ class MainViewModelTest {
             features = pointIncidents
         )
         // integrated test with real repository and mocked API
-        val repository = IncidentRepositoryImpl(mockApiService)
+        val repository = createRepository(mockApiService)
 
 
-        val viewModel = MainViewModel(repository)
+        val viewModel = MainViewModel(
+            repository,
+            networkStatusProvider = FakeNetworkStatusProvider(online = true)
+        )
         viewModel.load()
         advanceUntilIdle()
 
@@ -164,10 +188,13 @@ class MainViewModelTest {
             )
 
             // integrated test with real repository and mocked API
-            val repository = IncidentRepositoryImpl(mockApiService)
+            val repository = createRepository(mockApiService)
 
 
-            val viewModel = MainViewModel(repository)
+            val viewModel = MainViewModel(
+                repository,
+                networkStatusProvider = FakeNetworkStatusProvider(online = true)
+            )
             viewModel.load()
             advanceUntilIdle()
 
@@ -182,5 +209,22 @@ class MainViewModelTest {
                 else -> assertTrue(false)
             }
         }
+
+
+    private fun createMockDao(): IncidentDao {
+        val dao = mockk<IncidentDao>()
+        coEvery { dao.insertAll(any()) } returns Unit
+        coEvery { dao.getAll() } returns emptyList()
+        coEvery { dao.getLastUpdatedTime() } returns null
+        return dao
+    }
+
+    private fun createRepository(api: RfsApiService): IncidentRepositoryImpl {
+        return IncidentRepositoryImpl(
+            api,
+            createMockDao(),
+            FakeNetworkStatusProvider(online = true)
+        )
+    }
 
 }

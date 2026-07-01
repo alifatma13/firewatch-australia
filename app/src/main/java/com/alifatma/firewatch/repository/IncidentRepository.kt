@@ -7,4 +7,6 @@ interface IncidentRepository {
 
     suspend fun getMajorIncidents() : Result<RfsFeatureCollection>
 
+    suspend fun getLastSyncTime(): Long?
+
 }
